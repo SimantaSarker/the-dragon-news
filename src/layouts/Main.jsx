@@ -5,10 +5,10 @@ import Footer from "../pages/Shared/Footer/Footer";
 import { Col, Container, Row } from "react-bootstrap";
 import LeftNav from "../pages/Shared/LeftNav/LeftNav";
 import RightNav from "../pages/Shared/RightNav/RightNav";
-
+import './Main.css'
 const Main = () => {
   return (
-    <div>
+    <div className="main">
       <Header></Header>
       <Container>
         <Row>
@@ -16,7 +16,7 @@ const Main = () => {
             <LeftNav></LeftNav>
           </Col>
           <Col lg={6}>
-            <h2>Main content coming.</h2>
+            <Outlet></Outlet>
           </Col>
           <Col lg={3}>
             <RightNav></RightNav>
