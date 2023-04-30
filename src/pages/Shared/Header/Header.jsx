@@ -9,8 +9,15 @@ import { Link } from "react-router-dom";
 import {FaUserCircle } from "react-icons/fa";
 import { AuthContext } from "../../../providers/AuthProvider";
 const Header = () => {
-  const {user}=useContext(AuthContext);
+  const {user,logOut}=useContext(AuthContext);
+  
+  const handleLogOut=()=>{
+    logOut().then((result)=>{
+      console.log("successfully logOut")
+    }).catch(()=>{
 
+    })
+  }
   
   return (
     <Container>
@@ -49,16 +56,27 @@ const Header = () => {
           </Nav>
           <Nav className="d-flex align-items-center">
            {user &&  <Nav.Link href="#deets">{<FaUserCircle style={{fontSize:'2rem'}}></FaUserCircle>}</Nav.Link>}
-            <Nav.Link eventKey={2} href="#memes">
+      
            
-           {user ?  <Button variant="secondary">Logout</Button>: <Link to='/login'><Button variant="secondary">Login</Button></Link> }
-            </Nav.Link>
+           {user ? 
+           <>
+              <span className="span-style">
+              {user.email} <button onClick={handleLogOut}>Log Out</button>
+            </span>
+  
+            </>:
+             <Link to='/login'><Button variant="secondary">Login</Button></Link> }
+         
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
 
-
+    {/* {user && (
+          <span className="span-style">
+            {user.email} <button onClick={handleLogOut}>Log Out</button>{" "}
+          </span>
+        )} */}
 
 
 

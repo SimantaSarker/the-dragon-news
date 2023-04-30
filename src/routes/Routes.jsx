@@ -6,9 +6,10 @@ import News from "../pages/News/News/News";
 import LoginLayout from "../layouts/LoginLayout";
 import Login from "../pages/Login/Login/Login";
 import Register from "../pages/Login/Register/Register";
+import PrivateRoute from "./PrivateRoute";
+import Terms from "../pages/Shared/Terms/Terms";
 
-
-const router=createBrowserRouter([
+const router = createBrowserRouter([
   {
     path:'/',
     element:<LoginLayout></LoginLayout>,
@@ -25,33 +26,38 @@ const router=createBrowserRouter([
       {
         path:'/register',
         element:<Register></Register>
+      },
+      {
+        path:'terms',
+        element:<Terms></Terms>
       }
     ]
   },
   {
-    path:'category',
-    element:<Main></Main>,
-    children:[
-    
+    path: "category",
+    element: <Main></Main>,
+    children: [
+
       {
-        path:':id',
-        element:<Category></Category>,
-        loader:({params})=>fetch(`http://localhost:5000/categories/${params.id}`)
+        path: ":id",
+        element: <Category></Category>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/categories/${params.id}`),
+      },
+      
+    ],
+  },
+  {
+    path: "news",
+    element: <NewsLayout></NewsLayout>,
+    children: [
+      {
+        path: ":id",
+        element: <PrivateRoute><News></News></PrivateRoute>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/news/${params.id}`),
       },
     ],
- 
   },
-  {
-    path:'news',
-    element:<NewsLayout></NewsLayout>,
-    children:[
-      {
-        path:':id',
-        element:<News></News>,
-        loader:({params})=>fetch(`http://localhost:5000/news/${params.id}`)
-      }
-    ]
-  },
-
-])
+]);
 export default router;
